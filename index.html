@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Request new song</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body style='text-align:center;padding-top:10em;background-image:url(blurry-circles-1.jpg)'>
+    <div class="container">
+        <div class="panel panel-default"style='border-radius:25px;'>
+            <div class="panel-heading"style='border-radius:25px;'>
+                <h2>Request a song!</h2>
+            </div>
+            <div class="panel-body">
+                <form id="song-req">
+                    <input type="text" name="link" placeholder="Youtube song link">
+                    <button type="submit" name="sbbtn" id='submit-button' class='btn btn-default'>Add!</button>
+                </form>
+                <div id='response'></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    $('#song-req').submit(function(event) {
+        console.log('hello world');
+        event.preventDefault();
+        args = $('#song-req').serializeArray();
+        $.post('scripts/add.py', args, function(data) {
+            if(data == 200) {
+              $('#submit-button').removeClass("btn-default").addClass("btn-success").html("Success!");
+            }  else if(data == 401) {
+              $('#submit-button').removeClass("btn-default").addClass("btn-danger").html("Failure");
+            }
+        },"text");
+    });
+</script>
+
+</html>
