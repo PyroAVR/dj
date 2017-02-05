@@ -11,14 +11,15 @@ def get_songs(songs):
     return songs
 def select_song(songs):
     #Shuffle!
+    print(songs)
     song_id = 0
-    if songs == []:
-        return ''
-    elif len(songs) <= 2:
-        song_id = 1
+    if len(songs) < 1:
+        return []
+    elif len(songs) < 2:
+        song_id = 0
     else:
         song_id = randint(0,len(songs)-1)
-
+    print(song_id)
     #Remove the song from the list
     song_name = songs[song_id]
     c.execute("delete from songs where link=(?);", (song_name,))
@@ -31,7 +32,7 @@ def main():
     while True:
         songs_list = get_songs(songs_list)
         if len(songs_list) < 1:
-            continue
+            pass
         else:
             songname = select_song(songs_list)
             proc = sb.Popen(['/usr/bin/mpsyt', 'playurl', songname])
